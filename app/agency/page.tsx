@@ -78,7 +78,7 @@ export default function AgencyPage() {
             </h1>
           </div>
           <div className="xl:pl-[44%] w-full mt-4 ">
-            <p className="text-md md:text-6xl px-12 md:px-0">
+            <p className="text-md md:text-4xl px-12 md:px-0">
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Notre
               curiosité nourrit notre créativité. On reste humbles et on dit non
               aux gros egos, même le vôtre. Une marque est vivante. Elle a des

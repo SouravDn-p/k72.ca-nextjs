@@ -11,14 +11,22 @@ export default function Transitions() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(true);
 
+  useEffect(() => {
+    // Reset visibility on mount/route change
+    setVisible(true);
+  }, []);
+
   useGSAP(() => {
     if (!containerRef.current) return;
 
     const stairs = containerRef.current.querySelectorAll(".stair");
     if (!stairs.length) return;
 
+    // Reset stairs to initial state before animating
+    gsap.set(stairs, { height: "0%" });
+
     const tl = gsap.timeline({
-      onComplete: () => setVisible(false), // hide after animation
+      onComplete: () => setVisible(false), 
     });
 
     tl.fromTo(
