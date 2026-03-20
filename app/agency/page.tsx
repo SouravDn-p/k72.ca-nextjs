@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useState } from "react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -50,9 +50,13 @@ export default function AgencyPage() {
     });
   });
 
+  useEffect(() => {
+      ScrollTrigger.refresh();
+    }, []);
+
   return (
     <section className="overflow-x-hidden">
-      <Transitions />
+      {/* <Transitions /> */}
       <div className="section1 w-screen overflow-hidden">
         <div
           ref={imageDivRef}
