@@ -1,80 +1,92 @@
 "use client";
 
+import Transitions from "@/components/Transition";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { useRef } from "react";
+import { useState } from "react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-export default function ProjectsPage() {
-  const container = useRef(null);
+export default function AgencyPage() {
   const imageDivRef = useRef(null);
+  const imageRef = useRef(null);
 
-  useGSAP(
-    () => {
-      const tl = gsap.timeline();
+  const imageArray = [
+    "https://k72.ca/images/teamMembers/Carl_480x640.jpg?w=480&h=640&fit=crop&s=f0a84706bc91a6f505e8ad35f520f0b7",
+    "https://k72.ca/images/teamMembers/Olivier_480x640.jpg?w=480&h=640&fit=crop&s=c13569c0753117d04f1a93cf7b446d64",
+    "https://k72.ca/images/teamMembers/ChantalG_480x640.jpg?w=480&h=640&fit=crop&s=13093769c4a19cecd291ddcccd898991",
+    "https://k72.ca/images/teamMembers/Michele_480X640.jpg?w=480&h=640&fit=crop&s=ce85dc6d140947736baa739d0e59dab2",
+    "https://k72.ca/images/teamMembers/MEL_480X640.jpg?w=480&h=640&fit=crop&s=07c9bfee89816720b873e6748a276af6",
+    "https://k72.ca/images/teamMembers/MEGGIE_480X640_2.jpg?w=480&h=640&fit=crop&s=3604b19f8fc7b40f517954147698d847",
+    "https://k72.ca/images/teamMembers/joel_480X640_3.jpg?w=480&h=640&fit=crop&s=1cadbf143b3aa916b1b414464acbb4d6",
+  ];
 
-      tl.from(imageDivRef.current, {
-        x: 12,
-        y: 12,
-        opacity: 0,
-        duration: 1,
-        ease: "power1.inOut",
-        scrollTrigger: {
-          trigger: container.current,
-          start: "top 36%",
-          end: "bottom top",
-          // scrub: true,
-          markers: true,
-        }
-      }).to(imageDivRef.current, {
-        x: 0,
-        y: 20,
-        duration: 1,
-        ease: "power1.inOut",
-      });
-    },
-    { scope: container },
-  );
+  const [currentImage, setCurrentImage] = useState(imageArray[0]);
+
+  useGSAP(function () {
+    gsap.to(imageDivRef.current, {
+      x: -160,
+      ease: "power1.inOut",
+      duration: 3,
+      scrollTrigger: {
+        trigger: imageDivRef.current,
+        markers: true,
+        scrub: 2,
+        start: "top 20%",
+        end: "top -90%",
+        pin: true,
+        onUpdate: (st) => {
+          const imageIndex = Math.round(st.progress * imageArray.length);
+          setCurrentImage(
+            imageArray[imageIndex]
+              ? imageArray[imageIndex]
+              : "https://k72.ca/images/teamMembers/joel_480X640_3.jpg?w=480&h=640&fit=crop&s=1cadbf143b3aa916b1b414464acbb4d6",
+          );
+        },
+      },
+    });
+  });
 
   return (
-    <div ref={container} className="relative min-h-screen w-screen bg-white ">
-      <div className="relative " ref={imageDivRef}>
-        <Image
-          height={280}
-          width={280}
-          src="https://k72.ca/images/teamMembers/Carl_480x640.jpg?w=480&h=640&fit=crop&s=f0a84706bc91a6f505e8ad35f520f0b7"
-          alt="agence image"
-          className="absolute rounded-3xl left-[31vw] top-[23vh] z-10"
-        />
+    <section className="overflow-x-hidden">
+      <Transitions />
+      <div className="section1 w-screen overflow-hidden">
+        <div
+          ref={imageDivRef}
+          className="absolute rounded-3xl left-[20vw] md:left-[31vw] top-[20vh] overflow-hidden"
+        >
+          <Image
+            height={260}
+            width={260}
+            src={currentImage}
+            alt="agence image"
+            className=" h-full w-full object-cover"
+            ref={imageRef}
+          />
+        </div>
+        <div className="relative ">
+          <div className="mt-[35vh] md:mt-[55vh]">
+            <h1 className="text-[10vw] md:text-[19vw] leading-[12vw] md:leading-[17vw] text-center uppercase">
+              Soixan7e <br /> Douze{" "}
+            </h1>
+          </div>
+          <div className="xl:pl-[44%] w-full mt-4 ">
+            <p className="text-md md:text-6xl px-12 md:px-0">
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Notre
+              curiosité nourrit notre créativité. On reste humbles et on dit non
+              aux gros egos, même le vôtre. Une marque est vivante. Elle a des
+              valeurs, une personnalité, une histoire. Si on oublie ça, on peut
+              faire de bons chiffres à court terme, mais on la tue à long terme.
+              C’est pour ça qu’on s’engage à donner de la perspective, pour
+              bâtir des marques influentes.
+            </p>
+          </div>
+        </div>
       </div>
-
-      <div className="text-black pt-[50vh] relative z-10 h-screen overflow-x-hidden ">
-        <h1 className="text-[19vw] leading-[17vw] text-center uppercase">
-          Soixan7e <br /> Douze
-        </h1>
-
-        <p className="text-6xl pl-[40%] mt-2 ml-auto pr-6">
-          Notre curiosité nourrit notre créativité. On reste humbles et on dit
-          non aux gros egos, même le vôtre. Une marque est vivante. Elle a des
-          valeurs, une personnalité, une histoire.
-        </p>
-      </div>
-    </div>
+      <div className="h-screen"></div>
+    </section>
   );
-}
-
-{
-  /* <div class="c-about-hero_visual_inner">
-  <img data-about-hero="image" class="c-about-hero_visual_image is-inview -lazy-loaded" src="https://k72.ca/images/teamMembers/Carl_480x640.jpg?w=480&amp;h=640&amp;fit=crop&amp;s=f0a84706bc91a6f505e8ad35f520f0b7" data-scroll="" data-scroll-call="lazyLoad, Scroll" data-src="/images/teamMembers/Carl_480x640.jpg?w=480&amp;h=640&amp;fit=crop&amp;s=f0a84706bc91a6f505e8ad35f520f0b7" alt="" style="z-index: 68;">
-  <img data-about-hero="image" class="c-about-hero_visual_image is-inview -lazy-loaded" src="https://k72.ca/images/teamMembers/Olivier_480x640.jpg?w=480&amp;h=640&amp;fit=crop&amp;s=c13569c0753117d04f1a93cf7b446d64" data-scroll="" data-scroll-call="lazyLoad, Scroll" data-src="/images/teamMembers/Olivier_480x640.jpg?w=480&amp;h=640&amp;fit=crop&amp;s=c13569c0753117d04f1a93cf7b446d64" alt="" style="z-index: 69;">
-  <img data-about-hero="image" class="c-about-hero_visual_image is-inview -lazy-loaded" src="https://k72.ca/images/teamMembers/ChantalG_480x640.jpg?w=480&amp;h=640&amp;fit=crop&amp;s=13093769c4a19cecd291ddcccd898991" data-scroll="" data-scroll-call="lazyLoad, Scroll" data-src="/images/teamMembers/ChantalG_480x640.jpg?w=480&amp;h=640&amp;fit=crop&amp;s=13093769c4a19cecd291ddcccd898991" alt="" style="z-index: 70;">
-  <img data-about-hero="image" class="c-about-hero_visual_image is-inview -lazy-loaded" src="https://k72.ca/images/teamMembers/Michele_480X640.jpg?w=480&amp;h=640&amp;fit=crop&amp;s=ce85dc6d140947736baa739d0e59dab2" data-scroll="" data-scroll-call="lazyLoad, Scroll" data-src="/images/teamMembers/Michele_480X640.jpg?w=480&amp;h=640&amp;fit=crop&amp;s=ce85dc6d140947736baa739d0e59dab2" alt="" style="z-index: 71;">
-  <img data-about-hero="image" class="c-about-hero_visual_image is-inview -lazy-loaded" src="https://k72.ca/images/teamMembers/MEL_480X640.jpg?w=480&amp;h=640&amp;fit=crop&amp;s=07c9bfee89816720b873e6748a276af6" data-scroll="" data-scroll-call="lazyLoad, Scroll" data-src="/images/teamMembers/MEL_480X640.jpg?w=480&amp;h=640&amp;fit=crop&amp;s=07c9bfee89816720b873e6748a276af6" alt="" style="z-index: 72;">
-  <img data-about-hero="image" class="c-about-hero_visual_image is-inview -lazy-loaded" src="https://k72.ca/images/teamMembers/CAMILLE_480X640_2.jpg?w=480&amp;h=640&amp;fit=crop&amp;s=74317575b2d72fd11c5296615c383e4a" data-scroll="" data-scroll-call="lazyLoad, Scroll" data-src="/images/teamMembers/CAMILLE_480X640_2.jpg?w=480&amp;h=640&amp;fit=crop&amp;s=74317575b2d72fd11c5296615c383e4a" alt="" style="z-index: 57;">
-  <img data-about-hero="image" class="c-about-hero_visual_image is-inview -lazy-loaded" src="https://k72.ca/images/teamMembers/MEGGIE_480X640_2.jpg?w=480&amp;h=640&amp;fit=crop&amp;s=3604b19f8fc7b40f517954147698d847" data-scroll="" data-scroll-call="lazyLoad, Scroll" data-src="/images/teamMembers/MEGGIE_480X640_2.jpg?w=480&amp;h=640&amp;fit=crop&amp;s=3604b19f8fc7b40f517954147698d847" alt="" style="z-index: 56;">
-  <img data-about-hero="image" class="c-about-hero_visual_image is-inview -lazy-loaded" src="https://k72.ca/images/teamMembers/joel_480X640_3.jpg?w=480&amp;h=640&amp;fit=crop&amp;s=1cadbf143b3aa916b1b414464acbb4d6" data-scroll="" data-scroll-call="lazyLoad, Scroll" data-src="/images/teamMembers/joel_480X640_3.jpg?w=480&amp;h=640&amp;fit=crop&amp;s=1cadbf143b3aa916b1b414464acbb4d6" alt="" style="z-index: 55;">
-</div> */
 }
