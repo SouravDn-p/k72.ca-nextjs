@@ -24,3 +24,31 @@ body {
   color: var(--foreground);
   font-family: "Lausanne", sans-serif;
 }
+
+@keyframes k27-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes k27-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* View Transitions (Chrome/Safari TP). If you set animation-* without a name,
+   you override the UA default and end up with no transition. */
+::view-transition-old(root) {
+  animation: k27-fade-out 0.5s ease both;
+}
+
+::view-transition-new(root) {
+  animation: k27-fade-in 0.5s ease both;
+}

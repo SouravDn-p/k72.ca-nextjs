@@ -1,9 +1,10 @@
 import Link from "next/link";
 import VideoComponent from "../Video";
+import TransitionLink from "@/components/TransitionLink";
 
 export default function Hero() {
   return (
-    <div className="h-screen w-screen">
+    <div className="h-screen w-screen text-white">
       <div className="h-screen w-screen fixed">
         <VideoComponent />
       </div>
@@ -25,17 +26,17 @@ export default function Hero() {
         </section>
         <section className="flex space-x-8 mx-auto text-center items-center pb-4">
           <Link
-            href={"projects"}
+            href="/projects"
             className="text-[6vw] py-2 hover:border-[#D3FD50] hover:text-[#D3FD50] font-bold mr-12 tracking-wide px-8  border-4 rounded-full border-white uppercase  leading-[10.5vh]"
           >
             Projects
           </Link>
-          <Link
+          <TransitionLink
             href="/agency"
             className="text-[6vw] py-2 hover:border-[#D3FD50] hover:text-[#D3FD50] font-bold tracking-wide px-8  border-4 rounded-full border-white uppercase leading-[10.5vh] flex items-center"
           >
             Agency
-          </Link>
+          </TransitionLink>
         </section>
       </div>
     </div>

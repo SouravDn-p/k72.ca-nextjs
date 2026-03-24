@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import RouteTransition from "@/components/RouteTransition";
 
 export const metadata: Metadata = {
   title: "K27 Animated Website",
@@ -13,7 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <RouteTransition />
+        {children}
+      </body>
     </html>
   );
 }
